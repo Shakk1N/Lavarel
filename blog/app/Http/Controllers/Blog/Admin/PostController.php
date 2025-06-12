@@ -28,9 +28,7 @@ class PostController extends BaseController
         $this->blogPostRepository = app(BlogPostRepository::class); //app вертає об'єкт класа
         $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $items = BlogPost::all();
@@ -111,15 +109,7 @@ class PostController extends BaseController
 
         $result = $item->update($data); 
 
-        if ($result) {
-            return redirect()
-                ->route('blog.admin.posts.edit', $item->id)
-                ->with(['success' => 'Успішно збережено']);
-        } else {
-            return back()
-                ->with(['msg' => 'Помилка збереження'])
-                ->withInput();
-        }
+        
     }
 
     public function destroy(string $id)
