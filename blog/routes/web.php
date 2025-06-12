@@ -30,7 +30,11 @@ $groupData = [
     'prefix' => 'admin/blog',
 ];
 Route::group($groupData, function () {
-    // BlogCategory
+
+        Route::resource('posts', PostController::class)
+        ->except(['show'])
+        ->names('blog.admin.posts');
+
     $methods = ['index', 'edit', 'store', 'update', 'create'];
     Route::resource('categories', CategoryController::class)
         ->only($methods)
