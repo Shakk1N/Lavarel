@@ -2,31 +2,42 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-
-
-
 
 class BlogPost extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
+    const UNKNOWN_USER = 1;
+    protected $fillable
+        = [
+            'title',
+            'slug',
+            'category_id',
+            'excerpt',
+            'content_raw',
+            'is_published',
+            'published_at',
+        ];
 
-    protected $fillable = [
-        'category_id',
-        'user_id',
-        'slug',
-        'title',
-        'excerpt',
-        'content_raw',
-        'content_html',
-        'is_published',
-        'published_at',
-    ];
+    /**
 
-    protected $casts = [
-        'is_published' => 'boolean',
-        'published_at' => 'datetime',
-    ];
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        //стаття належить категорії
+        return $this->belongsTo(BlogCategory::class);
+    }
+
+    /**
+
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
