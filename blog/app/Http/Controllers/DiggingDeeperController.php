@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BlogPost;
 use Carbon\Carbon;
+use App\Jobs\ProcessVideoJob;
+use App\Jobs\GenerateCatalog\GenerateCatalogMainJob;
 
 class DiggingDeeperController extends Controller
 {
@@ -19,6 +21,16 @@ class DiggingDeeperController extends Controller
      * @url https://laravel.com/api/11.x/Illuminate/Database/Eloquent/Collection.html
      * 
      */
+
+    public function processVideo()
+    {
+        ProcessVideoJob::dispatch();
+    }
+
+    public function prepareCatalog()
+    {
+        GenerateCatalogMainJob::dispatch();
+    }
 
     public function collections()
     {
@@ -36,7 +48,7 @@ class DiggingDeeperController extends Controller
          */
         $collection = collect($eloquentCollection->toArray());
 
-       /* dd(
+        /* dd(
             get_class($eloquentCollection),
             get_class($collection),
             $collection
