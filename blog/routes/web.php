@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\RestTestController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DiggingDeeperController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,11 +21,16 @@ Route::middleware([
         Route::resource('posts', PostController::class)->names('blog.posts');
     });
 
+
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-
+    Route::group(['prefix' => 'digging_deeper'], function () {
+    Route::get('collections', [DiggingDeeperController::class, 'collections'])
+        ->name('digging_deeper.collections');
+    });
     // Адмінка
 $groupData = [
     'namespace' => 'App\Http\Controllers\Blog\Admin',
