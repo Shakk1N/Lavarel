@@ -36,10 +36,12 @@ class PostController extends BaseController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show($id)
+{
+    $post = BlogPost::with(['user', 'category'])->findOrFail($id);
+    return response()->json(['data' => $post]);
+}
+
 
     /**
      * Show the form for editing the specified resource.
