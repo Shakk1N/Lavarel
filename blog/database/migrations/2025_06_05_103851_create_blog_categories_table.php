@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+         if (!Schema::hasTable('blog_categories')) {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -19,7 +20,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
-        });
+            });
+        }
     }
 
     /**
